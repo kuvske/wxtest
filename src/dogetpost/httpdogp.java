@@ -6,9 +6,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 public class httpdogp {
 
@@ -29,4 +31,28 @@ public class httpdogp {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void dopost(String url,String ourstr){
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		HttpPost hp = new HttpPost(url);
+		StringEntity ste= new StringEntity(ourstr,"utf-8");
+		hp.setEntity(ste);
+		
+		try {
+			HttpResponse response = httpclient.execute(hp);
+			HttpEntity he = response.getEntity();
+			String st = EntityUtils.toString(he);
+			
+			JSONObject js = new JSONObject(st);
+			
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
